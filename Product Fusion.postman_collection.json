@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "ce0e2e9c-4295-4145-93a3-6c0f50946e77",
+		"name": "Product Fusion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24652988"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    pm.collectionVariables.set(\"rts_token\", pm.response.json().data.access_token);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "jithu@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "jithu",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}user/login/",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzYyODIzMywiaWF0IjoxNzI3NTk5NDMzLCJqdGkiOiI4ZDY2MDFhMTUzYjM0ZDMwOTA2ODU1NTRhZjA5OGNiYyIsInVzZXJfaWQiOjEsImhhc2hfcGFzc3dvcmQiOiJENzhEOTlDRkM3RUZFQzRDNzU1RkRBMDMzMEFGMjIzQiJ9.dUi1U5ueILDhijO5dvo-jGoTERCdBWkmHUwTPUQ2U3E\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/login/refresh/",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"login",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"salmo@gmail.com\",\r\n        \"password\": \"salmo@123\",\r\n        \"profile\": {\r\n            \"key\": \"value\"\r\n        },\r\n        \"status\": 1\r\n    },\r\n    \"organization\": {\r\n        \"name\": \"Google\"\r\n    },\r\n    \"member_role\": {\r\n        \"role_name\": \"admin\",\r\n        \"role_description\": \"role_description\",\r\n        \"manager_status\": 1,\r\n        \"settings\": {\r\n            \"key\": \"value\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/signup/",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{rts_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"salmo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/change-password/",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"change-password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Role Wise User List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}user/role-wise-users/?date_range=",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"role-wise-users",
+								""
+							],
+							"query": [
+								{
+									"key": "date_range",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invite Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"send_to\":\"jithujacob73@gmail.com\",\r\n    \"subject\":\"Welcom Mail\",\r\n    \"recipient_name\":\"jithu\",\r\n    \"sender_name\":\"salmo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/invite-email/",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"invite-email",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{rts_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Orginazation",
+			"item": [
+				{
+					"name": "Delete Member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}organization/member/5/",
+							"host": [
+								"{{base_url}}organization"
+							],
+							"path": [
+								"member",
+								"5",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"staff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}organization/member/1/update-role/",
+							"host": [
+								"{{base_url}}organization"
+							],
+							"path": [
+								"member",
+								"1",
+								"update-role",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Org member list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}organization/org-user-list/?date_range=2024-09-28|2024-10-01",
+							"host": [
+								"{{base_url}}organization"
+							],
+							"path": [
+								"org-user-list",
+								""
+							],
+							"query": [
+								{
+									"key": "date_range",
+									"value": "2024-09-28|2024-10-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Org Role wise member list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}organization/org-role-wise-user-list/?date_range=2024-09-28|2024-09-",
+							"host": [
+								"{{base_url}}organization"
+							],
+							"path": [
+								"org-role-wise-user-list",
+								""
+							],
+							"query": [
+								{
+									"key": "date_range",
+									"value": "2024-09-28|2024-09-"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{rts_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "rts_token",
+			"value": ""
+		}
+	]
+}
